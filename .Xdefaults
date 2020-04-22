@@ -1,0 +1,98 @@
+! Rxvt
+Rxvt*geometry:			80x35
+Rxvt*foreground:		white
+!Rxvt*background:		black
+Rxvt*background:		#172727
+!xvt*cursorColor:		aquamarine1
+Rxvt*font:			terminus-20
+Rxvt*boldFont:			terminus-bold-20
+Rxvt*loginShell:		on
+Rxvt*visualBell:		on
+Rxvt*scrollBar:			off    
+Rxvt*borderColor:		aquamarine4
+
+! 0=black, 1=red,  2=green,  3=yellow,  4=blue, 5=magenta,  6=cyan,  7=white
+! Rxvt*color0:			black
+! !Rxvt*color0:			cyan
+! Rxvt*color1:			OrangeRed
+! Rxvt*color2:			aquamarine3
+! Rxvt*color3:			aquamarine1
+ Rxvt*color4:			aquamarine4
+! Rxvt*color5:			orange
+! Rxvt*color6:			aquamarine2
+! Rxvt*color7:			white
+! Rxvt*color8:			cyan
+! Rxvt*color9:			OrangeRed
+! Rxvt*color10:			aquamarine3
+! Rxvt*color11:			aquamarine1
+! Rxvt*color12:			aquamarine4
+! Rxvt*color13:			orange
+! Rxvt*color14:			aquamarine2
+! Rxvt*color15:			white
+
+
+! rxvt defaults colors
+Rxvt*color0:			black
+! Rxvt*color1:			Red3
+! Rxvt*color2:			Green3
+! Rxvt*color3:			Yellow3
+! Rxvt*color4:			Blue3
+! Rxvt*color5:			Magenta3
+! Rxvt*color6:			Cyan3
+! Rxvt*color7:			AntiqueWhite
+! Rxvt*color8:			Grey25
+! Rxvt*color9:			Red
+! Rxvt*color10:			Green
+! Rxvt*color11:			Yellow
+! Rxvt*color12:			Blue
+! Rxvt*color13:			Magenta
+! Rxvt*color14:			Cyan
+Rxvt*color15:			white
+
+	!Default Colors
+       ! color1         (red)                = Red3
+       ! color2         (green)              = Green3
+       ! color3         (yellow)             = Yellow3
+       ! color4         (blue)               = Blue3
+       ! color5         (magenta)            = Magenta3
+       ! color6         (cyan)               = Cyan3
+       ! color7         (white)              = AntiqueWhite
+       ! color8         (bright black)       = Grey25
+       ! color9         (bright red)         = Red
+       ! color10        (bright green)       = Green
+       ! color11        (bright yellow)      = Yellow
+       ! color12        (bright blue)        = Blue
+       ! color13        (bright magenta)     = Magenta
+       ! color14        (bright cyan)        = Cyan
+       ! color15        (bright white)       = White
+       
+! Emacs
+Emacs.geometry:			80x54
+Emacs.foreground:		white
+Emacs.background:		#172727
+Emacs.cursorColor:		aquamarine1
+Emacs.font:			terminus-16
+!Emacs.font:			TakeoPGothic-10
+Emacs.toolBar:			off
+Emacs.menuBar:			off
+Emacs.verticalScrollBars:	off
+Emacs.reverseVideo:	off
+
+Tgif*Background:	AntiqueWhite1
+Tgif*Geometry:		+0+0
+
+! デフォルトのフォントサイズを 20 point にする。
+Tgif*InitialFontSize:	20
+
+! 使いたいフォントサイズの一覧
+Tgif.FontSizes:    8  9 10 11 12 13 14 15 16 17 18 19 \
+                  20 22 24 26 28 30 32 34 36 38 40 42 \
+                  44 46 48 52 56 60 64 70 74 78 82 86 \
+                  90 94 100 120 140 160
+
+! グリッド間隔の大きさを変更。 -2 -1 0 +1 +2 が指定できる
+Tgif*InitialGrid:	-1
+
+! デフォルトの線の形を none（矢印無し）にする
+Tgif*InitialArrowStyle:	NONE
+Tgif*DefaultLineStyle:	plain
