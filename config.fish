@@ -37,7 +37,7 @@ set PATH ~/.anyenv/bin $PATH
 anyenv init - |source
 
 #PYTHONPATH
-set -x PYTHONPATH /usr/local/lib/python3.5/dist-packages/:~/.anyenv/envs/pyenv/versions/3.7.3/lib/python3.7/site-packages//
+set -x PYTHONPATH /usr/local/lib/python3.5/dist-packages/:/home/keita/lib/python//:~/.anyenv/envs/pyenv/versions/3.7.3/lib/python3.7/site-packages//
 
 #C-rでコマンドの履歴検索 *packageのpecoを利用
 function fish_user_key_bindings
@@ -55,7 +55,7 @@ plenv init - |source
 # // でそれ以下のディレクトリを参照
 export TEXINPUTS=.:/usr/local/lib/inputs//:/usr/share/texlive/texmf-dist//:/etc/texmf//
 
-# set -x TEXINPUTS /usr/local/lib/inputs:/usr/share/texlive/texmf-dist/:/etc/texmf $TEXINPUTS
+# set -x TEXINPUTS .:/usr/local/lib/inputs//:/usr/share/texlive//:/etc/texmf// $TEXINPUTS
 
 #alias
 alias m=mupdf
@@ -66,3 +66,6 @@ set -x BROWSER firefox-esr
 set PATH ~/bin $PATH
 # export PATH=$PATH:~/bin
 
+# export DISPLAY=localhost:0.0
+
+set -x  PKG_CONFIG_PATH /home/keita/.config/pkgconfig/

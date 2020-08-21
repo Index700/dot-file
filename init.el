@@ -83,7 +83,6 @@
 (add-to-list 'load-path "~/.emacs-trr")
 ;;(require 'trr)
 
-
 ;;show ( and )
 (show-paren-mode 1)
 
@@ -91,15 +90,22 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;;auto-complete mode "company"
-(require 'python)
+;; (require 'python)
 (require 'company)
-(global-company-mode) ; 全バッファで有効にする
-(add-hook 'after-init-hook 'global-company-mode)
+;; (global-company-mode) ; 全バッファで有効にする
+;; (add-hook 'after-init-hook 'global-company-mode)
+
+(add-hook 'shell-mode-hook 'company-mode)
+(add-hook 'org-mode-hook 'company-mode)
+(add-hook 'lisp-mode-hook 'company-mode)
+(add-hook 'emacs-lisp-mode-hook 'company-mode)
+(add-hook 'text-mode-hook 'company-mode)
+(add-hook 'tex-mode 'company-mode)
 (setq company-idle-delay 0) ; デフォルトは0.5
 (setq company-minimum-prefix-length 2)	;デフォルトは4
 (setq company-selection-wrap-around t) ; 候補の一番下でさらに下に行こうとすると一番上に戻る
- (add-to-list 'company-backends 'company-jedi)
- (add-hook 'python-mode-hook 'my/python-mode-hook)
+ ;; (add-to-list 'company-backends 'company-jedi)
+ ;; (add-hook 'python-mode-hook 'my/python-mode-hook)
 
 ;;キーバインド変更
   ;;M-x describe-key-briefly でキーバインドの割り当てを確認
@@ -168,7 +174,7 @@
 
 ;;  )
 
-::ここは変えない
+;;ここは変えない
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -176,7 +182,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (pangu-spacing auto-highlight-symbol helm-tail gnu-elpa-keyring-update elscreen helm-firefox helm dash undo-tree trr tabbar-ruler smartparens rainbow-delimiters magit git-link company-jedi auto-complete))))
+    (exec-path-from-shell markdown-mode pangu-spacing auto-highlight-symbol helm-tail gnu-elpa-keyring-update elscreen helm-firefox helm dash undo-tree trr tabbar-ruler smartparens rainbow-delimiters magit git-link company-jedi auto-complete))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -212,17 +218,16 @@
 ;===============
 ; jedi (package.elの設定より下に書く)
 ;===============
-;; (require 'auto-complete)
-;; (require 'epc)
-;; (require 'auto-complete-config)
-;; (require 'python)
-
-
-;;;;; PYTHONPATH上のソースコードがauto-completeの補完対象になる ;;;;;
-;; (setenv "PYTHONPATH" "/usr/local/lib/python2.7/site-packages")
-;; (require 'jedi)
-;; (add-hook 'python-mode-hook 'jedi:setup)
-;; (setq jedi:complete-on-dot t)
+(require 'auto-complete)
+(require 'epc)
+(require 'auto-complete-config)
+(require 'python)
+;;PYTHONPATH上のソースコードがauto-completeの補完対象になる ;;;;;
+(setenv "PYTHONPATH" "/usr/local/lib/python3.5/site-packages//:/home/keita/lib/python//:~/.anyenv/envs/pyenv/versions/3.7.3/lib/python3.7/site-packages//")
+(require 'jedi)
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)
+(setq ac-delay 2)
 
 ;;Cell mode の定義
 (autoload 'Cell-mode "cell")
@@ -259,7 +264,7 @@
 	     (folding-mode 1)))
 
 (folding-add-to-marks-list 'ruby-mode "#{{{" "#}}}" nil t)
- (folding-add-to-marks-list 'python-mode "#{{" "#}}"  nil t)
+(folding-add-to-marks-list 'python-mode "#{{" "#}}"  nil t)
 (folding-add-to-marks-list 'c-mode "/*{{{" "/*}}}" nil t)
 (folding-add-to-marks-list 'php-mode "//{"  "//}"  nil t)
 (folding-add-to-marks-list 'prolog-mode "%{{{" "%}}}" nil t)
@@ -316,4 +321,56 @@ as input."
 	      (set (make-local-variable 'pangu-spacing-real-insert-separtor) t)))
  ;; (setq pangu-spacing-real-insert-separtor t)
 
+;; lookup-oald oald.el
+(autoload 'lookup-oald "oald" nil t)
+(autoload 'lookup-print-oald "oald" nil t)
+(autoload 'lookup-region-oald "oald" nil t)
+(global-set-key (kbd "C-c C-O") 'lookup-oald)
+(global-set-key (kbd "C-c C-o") 'lookup-range-oald)
 
+;; 辞書 epwing
+(setq lookup-search-agents
+  '(
+    (ndeb "~/dict/koujien/cdrom")
+  ))
+(setq lookup-enable-splash nil)
+(autoload 'lookup "lookup" nil t)
+(autoload 'lookup-region "lookup" nil t)
+(autoload 'lookup-pattern "lookup" nil t)
+(global-set-key (kbd "M-D ") 'lookup-pattern)
+(global-set-key (kbd "M-d ") 'lookup-region)
+(setq lookup-default-dictionary-options
+'((:stemmer . stem-english)))
+(setq lookup-use-kakasi nil)
+
+(global-set-key (kbd "C-c ?") 'describe-function)
+
+(recentf-mode 1)
+
+;; org to pdf
+(setq org-latex-pdf-process
+      '("uplatex %b.tex" "uplatex %b.tex" "dvipdfmx %b.dvi"))
+
+;; open file after export
+(eval-after-load "org"
+  '(progn
+     (delete '("\\.pdf\\'" . default) org-file-apps)
+     (add-to-list 'org-file-apps '("\\.pdf\\'" . "mupdf %s")))
+  )
+
+(global-set-key (kbd "C-c t") 'toggle-truncate-lines)
+
+(defun md2pdf ()
+"Generate pdf from currently open markdown."
+(interactive)
+(let ((filename (buffer-file-name (current-buffer))))
+(shell-command-to-string
+ (concat "pandoc "
+	 filename
+	 " -o "
+	 (file-name-sans-extension filename)
+	 ".pdf -V mainfont=IPAPGothic -V fontsize=16pt --pdf-engine=lualatex"))
+(shell-command-to-string
+ (concat "xdg-open "
+	 (file-name-sans-extension filename)
+	 ".pdf"))))

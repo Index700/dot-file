@@ -1,0 +1,86 @@
+(setq skk-henkan-number-to-display-candidates 10)
+
+;;動的な補完を使う
+(setq skk-dcomp-activate t)
+;; ▽ほ-!-んとう の「んとう」の face
+(set-face-foreground 'skk-dcomp-face "green")
+
+;; ;;動的に予測変換
+(setq skk-dcomp-multiple-activate t
+      skk-dcomp-multiple-rows 10)
+
+;; アノテーションを表示
+;;(setq skk-show-annotation t)
+
+;; look コマンドで英語を予測
+(setq skk-use-look t)
+
+;; 変換時にエンターキーで改行しない
+(setq skk-egg-like-newline t)
+
+
+;;変換を学習
+(require 'skk-study)
+
+(add-hook 'minibuffer-setup-hook
+	 (lambda ()
+	   (when (and (boundp 'skk-henkan-okuri-strictly)
+		      skk-henkan-okuri-strictly
+		      (not (eq last-command 'skk-purge-jisyo)))
+	     (setq skk-henkan-okuri-strictly nil)
+	     (put 'skk-henkan-okuri-strictly 'temporary-nil t))))
+(add-hook 'minibuffer-exit-hook
+	  (lambda ()
+	    (when (and (get 'skk-henkan-okuri-strictly 'temporary-nil)
+		       (<= (minibuffer-depth) 1))
+	      (put 'skk-henkan-okuri-strictly 'temporary-nil nil)
+	      (setq skk-henkan-okuri-strictly t))))
+
+(setq skk-auto-okuri-process nil)
+
+;; (setq skk-use-auto-kutouten t)
+
+
+
+;; ;;日本語と英語の間に自動で空白を入れる
+;; (defvar my-jipangu-japanese-rx "¥¥cA¥¥|¥¥cC¥¥|¥¥ck¥¥|¥¥cK¥¥|¥¥cH")
+;; (defvar my-jipangu-english-rx "[0-9A-Za-z]")
+
+;; (defun my-jipangu-insert-spaces (beg end &rest _)
+;;   (setq beg (max (1- beg) 1)
+;;         end (min (1+ end) (1+ (buffer-size))))
+;;   (save-restriction
+;;     (narrow-to-region beg end)
+;;     (save-excursion
+;;       (dolist (rx (list
+;;                    (concat "¥¥(" my-jipangu-english-rx "¥¥)"
+;;                            "¥¥(" my-jipangu-japanese-rx "¥¥)")
+;;                    (concat "¥¥(" my-jipangu-japanese-rx "¥¥)"
+;;                            "¥¥(" my-jipangu-english-rx "¥¥)")))
+;;         (goto-char beg)
+;;         (while (search-forward-regexp rx nil t)
+;;           (forward-char -1)
+;;           (insert " "))))))
+
+(define-minor-mode my-jipangu-mode
+  "automatic space insertion between Japanese and English letters."
+  :init-value nil
+  :global nil
+  (if (not my-jipangu-mode)
+      (remove-hook 'after-change-functions 'my-jipangu-insert-spaces t)
+    (my-jipangu-insert-spaces 1 (1+ (buffer-size)))
+    (add-hook 'after-change-functions 'my-jipangu-insert-spaces nil t)))
+
+
+; skk の変換規則
+(setq skk-rom-kana-rule-list
+      (append skk-rom-kana-rule-list
+	      '(("@" nil "@")
+	        ;; ("." nil ".")
+		(":" nil ":")
+	        (";" nil ";")
+                ("?" nil "?")
+	        ("-" nil "-")		
+		;; ("," nil ",")
+		)))
+
